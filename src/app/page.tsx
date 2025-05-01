@@ -1,19 +1,19 @@
 import ProjectSummary from "./ProjectSummary";
 import TodayTask from "./TodayTask";
-import Yukarı from "./yukarı";
-import { Component as SagAlt } from "./sagalt";
-import { Component as SagOrta } from "./sagorta";
+import Header from "./header";
+import { Component as BarChart } from "./barChart";
+import { Component as RadialChart } from "./radialChart";
 
 export default function Home() {
   return (
     <div className="flex-1 mt-[-20px]">
-      <Yukarı />
+      <Header />
       <div className="flex flex-row space-x-4">
         <div className="w-3/5">
           <ProjectSummary />
         </div>
         <div className="w-2/5">
-          <SagOrta />
+          <RadialChart />
         </div>
       </div>
       <div className="flex flex-row space-x-4">
@@ -21,7 +21,7 @@ export default function Home() {
           <TodayTask />
         </div>
         <div className="w-2/5 h-[220px]">
-          <SagAlt />
+          <BarChart />
         </div>
       </div>
     </div>

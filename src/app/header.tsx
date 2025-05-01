@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-export default function Yukarı() {
+export default function Header() {
   return (
     <div className="p-4 space-y-4"> {/* Padding ve spacing küçültüldü */}
       <div className="flex justify-between items-center mb-0"> {/* Margin küçültüldü */}
@@ -43,9 +43,9 @@ export default function Yukarı() {
           </div>
         </div>
 
-        {/* Today’s Meetings */}
+        {/* Today's Meetings */}
         <div className="bg-blue-100 rounded-lg p-3 shadow-md h-full"> {/* Arka plan rengi değiştirildi */}
-          <h3 className="text-base font-medium mb-3 text-gray-700">Today’s Meetings</h3> {/* Yazı boyutu küçültüldü */}
+          <h3 className="text-base font-medium mb-3 text-gray-700">Today`&apos`s Meetings</h3> {/* Yazı boyutu küçültüldü */}
           {[1, 2].map((_, i) => (
             <div key={i} className="flex items-center justify-between mb-2 last:mb-0"> {/* Margin küçültüldü */}
               <div className="flex items-center space-x-2"> {/* Spacing küçültüldü */}
