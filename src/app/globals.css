@@ -3,17 +3,74 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-lightBlue: 179, 214, 231; /* #B3D6E7 */
+    --color-blue: 33, 158, 188; /* #219EBC */
+    --color-transparentWhite: 255, 255, 255; /* rgba(255, 255, 255, 0.34) için taban */
+    --color-darkBlue: 2, 48, 71; /* #023047 */
+    --color-orange: 251, 133, 0; /* #FB8500 */
+    
+    --background: #B3D6E7;
+    --foreground: #023047;
+    
+    --primary: #219EBC;
+    --primary-foreground: 255, 255, 255;
+    
+    --secondary: #FB8500;
+    --secondary-foreground: 255, 255, 255;
+    
+    --accent: #FB8500;
+    --accent-foreground: 255, 255, 255;
+
+    --muted: 245, 245, 245;
+    --muted-foreground: 115, 115, 115;
+    
+    --border: #219EBC;
+    --input: #B3D6E7;
+    
+    --chart-1: 33, 158, 188;
+    
+    --sidebar: #219EBC;
+    --sidebar-foreground: 255, 255, 255;
+    --sidebar-border: rgba(255, 255, 255, 0.34);
+    --sidebar-accent: rgba(2, 48, 71, 0.5);
+    --sidebar-accent-foreground: 255, 255, 255;
+    --sidebar-muted: rgba(255, 255, 255, 0.34);
+    --sidebar-ring: 255, 255, 255;
+  }
+  
+  .dark {
+    --background: #023047;
+    --foreground: #B3D6E7;
+    
+    --primary: #219EBC;
+    --primary-foreground: 255, 255, 255;
+    
+    --secondary: #FB8500;
+    --secondary-foreground: 255, 255, 255;
+    
+    --accent: #FB8500;
+    --accent-foreground: 255, 255, 255;
+    
+    --muted: 40, 40, 40;
+    --muted-foreground: 140, 140, 140;
+    
+    --border: #219EBC;
+    --input: #023047;
+    
+    --sidebar: #023047;
+    --sidebar-foreground: 255, 255, 255;
+    --sidebar-border: rgba(255, 255, 255, 0.34);
+    --sidebar-accent: rgba(33, 158, 188, 0.2);
+    --sidebar-accent-foreground: 255, 255, 255;
+    --sidebar-muted: rgba(255, 255, 255, 0.34);
+    --sidebar-ring: 255, 255, 255;
+  }
 }
 
 @theme inline {
@@ -34,7 +91,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #ffffff;
-  --foreground: #171717;
+    --foreground: #171717;
   }
 }
 
@@ -255,5 +312,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .desktop {
+    color: var(--color-desktop);
   }
 }

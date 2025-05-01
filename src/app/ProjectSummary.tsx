@@ -1,3 +1,7 @@
+'use client';
+
+import { colors } from "@/theme/colors";
+
 export default function ProjectSummary() {
   const projects = [
     { name: "Nelsa web developement", manager: "Om prakash sao", date: "May 25, 2023", status: "Completed", progress: 100 },
@@ -7,45 +11,96 @@ export default function ProjectSummary() {
     { name: "Website builder developement", manager: "Sukumar rao", date: "Mar 15, 2024", status: "On going", progress: 50 },
   ];
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): React.CSSProperties => {
     switch (status) {
-      case "Completed": return "bg-green-200 text-green-800";
-      case "Delayed": return "bg-red-200 text-red-800";
-      case "At risk": return "bg-orange-200 text-orange-800";
-      case "On going": return "bg-blue-200 text-blue-800";
-      default: return "bg-gray-200 text-gray-800";
+      case "Completed":
+        return { backgroundColor: "#bbf7d0", color: "#166534" }; // Tailwind green-200, green-800
+      case "Delayed":
+        return { backgroundColor: "#fecaca", color: "#991b1b" }; // Tailwind red-200, red-800
+      case "At risk":
+        return { backgroundColor: `${colors.orange}20`, color: colors.orange };
+      case "On going":
+        return { backgroundColor: `${colors.blue}20`, color: colors.blue };
+      default:
+        return { backgroundColor: "#e5e7eb", color: "#1f2937" }; // Tailwind gray-200, gray-800
     }
+  };
+  
+  const getProgressColor = (progress: number) => {
+    if (progress < 30) return colors.orange;
+    if (progress < 70) return colors.blue;
+    return "#22c55e";
   };
 
   return (
-    <div className="bg-blue-100 rounded-xl p-4 ml-4"> {/* Buraya sol boşluk eklendi */}
+    <div 
+      className="rounded-xl p-4 ml-4 border" 
+      style={{ 
+        backgroundColor: `${colors.lightBlue}40`,
+        borderColor: colors.blue
+      }}
+    >
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-sm font-medium">Project summary</h2>
+        <h2 className="text-sm font-medium" style={{ color: colors.darkBlue }}>Proje özeti</h2>
+        <button 
+          className="text-xs hover:text-opacity-80 transition-colors" 
+          style={{ color: colors.blue }}
+        >
+          Tümünü gör
+        </button>
       </div>
       <table className="w-full text-xs text-left">
-        <thead className="text-gray-500">
-          <tr className="text-left">
-            <th className="pl-1">Name</th>
-            <th>Project manager</th>
-            <th>Due date</th>
-            <th>Status</th>
-            <th>Progress</th>
+        <thead style={{ 
+          color: colors.darkBlue, 
+          borderBottomWidth: '1px', 
+          borderBottomStyle: 'solid', 
+          borderBottomColor: `${colors.blue}30` 
+        }}>
+          <tr>
+            <th className="py-2 px-2">Proje Adı</th>
+            <th className="py-2 px-2">Proje Yöneticisi</th>
+            <th className="py-2 px-2">Tarih</th>
+            <th className="py-2 px-2">Durum</th>
+            <th className="py-2 px-2">İlerleme</th>
           </tr>
         </thead>
         <tbody>
-          {projects.map((proj, i) => (
-            <tr key={i} className="border-b border-gray-300">
-              <td className="py-1">{proj.name}</td>
-              <td>{proj.manager}</td>
-              <td>{proj.date}</td>
-              <td>
-                <span className={`px-1 py-0.5 rounded-full text-[10px] font-medium ${getStatusColor(proj.status)}`}>
-                  {proj.status}
+          {projects.map((project, index) => (
+            <tr 
+              key={index} 
+              style={{ 
+                borderBottomWidth: index !== projects.length - 1 ? '1px' : '0', 
+                borderBottomStyle: 'solid', 
+                borderBottomColor: `${colors.blue}20` 
+              }}
+              className="hover:bg-opacity-100 transition-colors"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = colors.transparentWhite;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '';
+              }}
+            >
+              <td className="py-2 px-2 font-medium" style={{ color: colors.darkBlue }}>{project.name}</td>
+              <td className="py-2 px-2" style={{ color: colors.blue }}>{project.manager}</td>
+              <td className="py-2 px-2" style={{ color: `${colors.darkBlue}B3` }}>{project.date}</td>
+              <td className="py-2 px-2">
+                <span 
+                  className="px-2 py-1 rounded-md text-xs"
+                  style={getStatusColor(project.status)}
+                >
+                  {project.status}
                 </span>
               </td>
-              <td>
-                <div className="w-full bg-gray-200 rounded h-1">
-                  <div className="bg-green-500 h-1 rounded" style={{ width: `${proj.progress}%` }}></div>
+              <td className="py-2 px-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="h-2 rounded-full" 
+                    style={{ 
+                      width: `${project.progress}%`,
+                      backgroundColor: getProgressColor(project.progress)
+                    }}
+                  ></div>
                 </div>
               </td>
             </tr>

@@ -1,6 +1,7 @@
 "use client"
 
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
+import { colors } from "@/theme/colors"  // colors.ts'dan renk paletini import ediyoruz
 
 import {
   Card,
@@ -21,11 +22,11 @@ const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: colors.blue, // Hex kod yerine renk değişkeni kullanılıyor
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: colors.orange, // Hex kod yerine renk değişkeni kullanılıyor
   },
 } satisfies ChartConfig
 
@@ -33,9 +34,9 @@ export function Component() {
   const totalVisitors = chartData[0].desktop + chartData[0].mobile;
 
   return (
-    <Card className="flex flex-col p-2 mr-4"> {/* Sağ boşluk eklendi */}
+    <Card className="flex flex-col p-2 mr-4" style={{ backgroundColor: `${colors.lightBlue}40` }}> {/* Arka plan tema değişkeniyle ayarlandı */}
       <CardHeader className="items-center pb-1"> 
-        <CardTitle className="text-xs">Radial Chart - Stacked</CardTitle> 
+        <CardTitle className="text-xs" style={{ color: colors.darkBlue }}>Radial Chart - Stacked</CardTitle> 
         <CardDescription className="text-[10px]">January - June 2024</CardDescription> 
       </CardHeader>
       <CardContent className="flex flex-1 items-center pb-1"> 
@@ -63,6 +64,7 @@ export function Component() {
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) - 8} 
                           className="fill-foreground text-sm font-bold" 
+                          style={{ fill: colors.darkBlue }} // Renk tema değişkeniyle ayarlandı
                         >
                           {totalVisitors.toLocaleString()}
                         </tspan>
@@ -70,6 +72,7 @@ export function Component() {
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 6} 
                           className="fill-muted-foreground text-[10px]" 
+                          style={{ fill: colors.blue }} // Renk tema değişkeniyle ayarlandı
                         >
                           Visitors
                         </tspan>
@@ -83,12 +86,12 @@ export function Component() {
               dataKey="desktop"
               stackId="a"
               cornerRadius={5}
-              fill="var(--color-desktop)"
+              fill={colors.blue} // Renk tema değişkeniyle ayarlandı
               className="stroke-transparent stroke-2"
             />
             <RadialBar
               dataKey="mobile"
-              fill="var(--color-mobile)"
+              fill={colors.orange} // Renk tema değişkeniyle ayarlandı
               stackId="a"
               cornerRadius={5}
               className="stroke-transparent stroke-2"

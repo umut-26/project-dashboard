@@ -1,5 +1,6 @@
 "use client";
 import { CardFooter } from "@/components/ui/card";
+import { colors } from "@/theme/colors";
 
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 
@@ -29,15 +30,15 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: colors.blue,
   },
 } satisfies ChartConfig;
 
 export function Component() {
   return (
-    <Card className="h-[220px] flex flex-col text-xs p-2 mt-4 mr-4"> {/* Sağ boşluk eklendi */}
+    <Card className="h-[220px] flex flex-col text-xs p-2 mt-4 mr-4" style={{ backgroundColor: `${colors.lightBlue}40` }}> {/* Arka plan rengi theme ile değiştirildi */}
       <CardHeader>
-        <CardTitle className="text-sm">Bar Chart - Label</CardTitle>
+        <CardTitle className="text-sm" style={{ color: colors.darkBlue }}>Bar Chart - Label</CardTitle> {/* Başlık rengi theme ile değiştirildi */}
         <CardDescription className="text-xs">January - June 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 h-full">
@@ -52,7 +53,7 @@ export function Component() {
               tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={6}>
+            <Bar dataKey="desktop" fill={colors.blue} radius={6}>
               <LabelList position="top" offset={10} className="fill-foreground" fontSize={10} />
             </Bar>
           </BarChart>
