@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Calendar,
   LayoutDashboard,
@@ -5,6 +7,7 @@ import {
   Plus,
   Settings,
   Users,
+  ChevronLeft,
 } from "lucide-react";
 
 import {
@@ -16,9 +19,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
-import { colors } from "@/theme/colors"; // colors.ts'dan renk paletini import ediyoruz
+import { colors } from "@/theme/colors";
+import { cn } from "@/lib/utils";
 
 // Menu items.
 const items = [
@@ -31,6 +36,7 @@ const items = [
     title: "Dashboard",
     url: "#",
     icon: LayoutDashboard,
+    isActive: true,
   },
   {
     title: "Projects",
@@ -50,52 +56,123 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const { state, toggleSidebar } = useSidebar();
+  const isCollapsed = state === "collapsed";
+
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent
-        className="flex flex-col items-center"
+        className="flex flex-col items-stretch p-4 relative overflow-visible"
         style={{ backgroundColor: colors.blue }}
       >
-        {" "}
-        {/* Sabit hex kodu yerine tema değişkeni kullanıldı */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-white text-2xl font-bold mb-8 flex items-center">
-            <div>
-              <Settings
-                className="inline-block mr-2 w-8 h-8"
-                style={{ color: colors.darkBlue }}
-              />{" "}
-              {/* Sabit hex kodu yerine tema değişkeni kullanıldı */}
-              WINX
-            </div>
-          </SidebarGroupLabel>
-          <SidebarGroupContent className="mt-8">
-            <SidebarMenu>
+          <div className="relative flex justify-between items-center mb-15">
+            <SidebarGroupLabel 
+              className={cn(
+                "text-white text-2xl font-bold flex items-center",
+                isCollapsed ? "justify-center flex-1" : "justify-start"
+              )}
+            >
+              <div className={cn(
+                "flex items-center",
+                isCollapsed && "justify-center w-full"
+              )}>
+                <Settings
+                  className={cn(
+                    isCollapsed ? "w-8 h-8" : "w-8 h-8 mr-3"
+                  )}
+                  style={{ color: colors.darkBlue }}
+                />
+                {!isCollapsed && <span>WINX</span>}
+              </div>
+            </SidebarGroupLabel>
+            
+            {/* Toggle butonu sidebar içinde - sadece yatay hareket etsin */}
+            <button 
+              onClick={toggleSidebar}
+              className={cn(
+                "flex items-center justify-center w-9 h-9 rounded-full absolute",
+                "bg-blue-500/20 hover:bg-blue-500/30 transition-all border border-white/20",
+                isCollapsed ? "right-[-5px]" : "right-0",
+                "top-0" // Dikey konum sabit
+              )}
+            >
+              <ChevronLeft 
+                className={cn(
+                  "w-6 h-6 text-white/80 transition-transform", 
+                  isCollapsed ? "rotate-180" : ""
+                )} 
+              />
+            </button>
+          </div>
+          
+          <SidebarGroupContent className="overflow-visible">
+            <SidebarMenu className={cn(
+              "space-y-4 w-full overflow-visible",
+              isCollapsed && "flex flex-col items-center"
+            )}>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title} className="mb-4">
-                  <SidebarMenuButton asChild>
-                    <div>
-                      <a
-                        href={item.url}
-                        className="flex items-center gap-4 justify-center rounded-lg p-2 transition-colors duration-300 hover:bg-white/10"
-                      >
-                        <item.icon className="text-white w-6 h-6" />
-                        <span className="text-white text-lg">{item.title}</span>
-                      </a>
-                    </div>
+                <SidebarMenuItem key={item.title} className={cn(
+                  isCollapsed && "flex justify-center w-full"
+                )}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={item.isActive}
+                    tooltip={isCollapsed ? item.title : undefined}
+                  >
+                    <a
+                      href={item.url}
+                      className={cn(
+                        "flex items-center rounded-lg transition-all duration-200",
+                        isCollapsed 
+                          ? "justify-center w-14 h-14 mx-auto" 
+                          : "px-6 py-5 w-full",
+                        item.isActive
+                          ? "bg-white/20 text-white font-medium shadow-sm" 
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      )}
+                    >
+                      <item.icon 
+                        className={cn(
+                          isCollapsed ? "w-7 h-7" : "w-7 h-7 mr-4",
+                          item.isActive 
+                            ? "text-orange-400" 
+                            : "text-white/75 group-hover:text-white"
+                        )}
+                      />
+                      {!isCollapsed && <span className="font-medium">{item.title}</span>}
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {/* Footer - Turuncu buton */}
-        <div className="mt-auto mb-6 w-full px-4">
-          <button className="text-white w-full py-3 rounded-lg font-medium flex items-center justify-center transition-colors duration-300 hover:bg-orange-500/80">
-            <Settings className="mr-2 w-5 h-5" />
-            Ayarlar
-          </button>
-        </div>
+        
+        {/* Footer - Ayarlar butonu */}
+        {!isCollapsed ? (
+          <div className="mt-auto mb-3 w-full px-2">
+            <button 
+              className="text-white w-full py-5 px-6 rounded-lg font-medium flex items-center 
+                     bg-blue-700 hover:bg-blue-800 transition-colors duration-200 shadow-sm"
+              style={{ backgroundColor: colors.darkBlue }}
+            >
+              <Settings className="mr-4 w-7 h-7 text-orange-400" />
+              <span className="text-base">Ayarlar</span>
+            </button>
+          </div>
+        ) : (
+          <div className="mt-auto mb-3 w-full flex justify-center">
+            <button 
+              className="text-white p-3 rounded-full font-medium flex items-center justify-center
+                       hover:bg-blue-800 transition-colors duration-200 shadow-sm w-14 h-14"
+              style={{ backgroundColor: colors.darkBlue }}
+              title="Ayarlar"
+            >
+              <Settings className="w-7 h-7 text-orange-400" />
+            </button>
+          </div>
+        )}
       </SidebarContent>
     </Sidebar>
   );

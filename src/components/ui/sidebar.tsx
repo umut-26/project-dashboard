@@ -28,7 +28,7 @@ const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
-const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_WIDTH_ICON = "5rem"; // Değişiklik burada - 3rem'den 5rem'e artırıldı
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
@@ -257,33 +257,37 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, state } = useSidebar();
 
   return (
     <Button
-  data-sidebar="trigger"
-  data-slot="sidebar-trigger"
-  variant="ghost"
-  size="icon"
-  className={cn(
-    "size-7 flex items-center justify-center bg-transparent hover:bg-transparent focus:ring-0 focus:outline-none",
-    className
-  )}
-  onClick={(event) => {
-    onClick?.(event);
-    toggleSidebar();
-  }}
-  {...props}
->
-  <Image
-    src="/icons/left-arrow.png"
-    alt="Left Arrow"
-    width={24}
-    height={24}
-    className="w-6 h-6 mr-8 z-50"
-  />
-  <span className="sr-only">Toggle Sidebar</span>
-</Button>
+      data-sidebar="trigger"
+      data-slot="sidebar-trigger"
+      variant="ghost"
+      size="icon"
+      className={cn(
+        "size-8 flex items-center justify-center rounded-full bg-blue-500/20 hover:bg-blue-500/30 transition-all border border-white/20",
+        "absolute top-4 right-0 transform translate-x-1/2 z-50",
+        className
+      )}
+      onClick={(event) => {
+        onClick?.(event);
+        toggleSidebar();
+      }}
+      {...props}
+    >
+      <Image
+        src="/icons/left-arrow.png"
+        alt="Toggle Sidebar"
+        width={18}
+        height={18}
+        className={cn(
+          "transition-transform duration-200",
+          state === "collapsed" ? "rotate-180" : "rotate-0"
+        )}
+      />
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
   );
 }
 
@@ -377,12 +381,17 @@ function SidebarSeparator({
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
+  const { state } = useSidebar();
+  
   return (
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden bg-[#219ebc]", // Arka plan rengi eklendi
+        "flex min-h-0 flex-auto flex-col gap-2 transition-all duration-300",
+        "bg-[#219ebc]", // Arka plan rengi
+        state === "collapsed" ? "px-2" : "px-4",
+        "overflow-visible", // Scroll'ı engellemek için
         className
       )}
       {...props}
