@@ -22,8 +22,8 @@ import {
 
 import { colors } from "@/theme/colors";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation"; // Aktif yolu almak için
 
-// Menu items.
 const items = [
   {
     title: "Yeni Proje",
@@ -32,18 +32,17 @@ const items = [
   },
   {
     title: "Dashboard",
-    url: "#",
+    url: "/", // Ana sayfa
     icon: LayoutDashboard,
-    isActive: true,
   },
   {
     title: "Projects",
-    url: "#",
+    url: "/Projects",
     icon: Calendar,
   },
   {
-    title: "Task",
-    url: "#",
+    title: "Tasks",
+    url: "/Tasks",
     icon: List,
   },
   {
@@ -54,6 +53,8 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname(); // Şu anki sayfa yolu
+
   return (
     <div className="h-full w-full">
       <Sidebar collapsible="none" className="w-full h-full">
@@ -75,41 +76,42 @@ export function AppSidebar() {
                 </div>
               </SidebarGroupLabel>
             </div>
-            
+
             <SidebarGroupContent className="overflow-visible">
               <SidebarMenu className="space-y-4 w-full overflow-visible">
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={item.isActive}
-                    >
-                      <a
-                        href={item.url}
-                        className={cn(
-                          "flex items-center rounded-lg transition-all duration-200 px-6 py-5 w-full",
-                          item.isActive
-                            ? "bg-white/20 text-white font-medium shadow-sm" 
-                            : "text-white/90 hover:bg-white/10 hover:text-white"
-                        )}
-                      >
-                        <item.icon 
+                {items.map((item) => {
+                  const isActive = pathname === item.url;
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild isActive={isActive}>
+                        <a
+                          href={item.url}
                           className={cn(
-                            "w-7 h-7 mr-4",
-                            item.isActive 
-                              ? "text-orange-400" 
-                              : "text-white/75 group-hover:text-white"
+                            "flex items-center rounded-lg transition-all duration-200 px-6 py-5 w-full",
+                            isActive
+                              ? "bg-white/20 text-white font-medium shadow-sm"
+                              : "text-white/90 hover:bg-white/10 hover:text-white"
                           )}
-                        />
-                        <span className="font-medium">{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                        >
+                          <item.icon
+                            className={cn(
+                              "w-7 h-7 mr-4",
+                              isActive
+                                ? "text-orange-400"
+                                : "text-white/75 group-hover:text-white"
+                            )}
+                          />
+                          <span className="font-medium">{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-          
+
           {/* Footer - Ayarlar butonu */}
           <div className="mt-auto mb-3 w-full px-2">
             <button 
