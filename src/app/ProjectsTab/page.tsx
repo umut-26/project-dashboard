@@ -1,5 +1,5 @@
-import Header from './Header';
-import ProjectsTable from './ProjectsTable';
+import Header from '../../components/projects/Header';
+import ProjectsTable from '../../components/projects/ProjectsTable';
 
 export default function ProjectsPage() {
   return (

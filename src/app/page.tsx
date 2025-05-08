@@ -1,8 +1,8 @@
-import ProjectSummary from "./ProjectSummary";
-import TodayTask from "./TodayTask";
-import Header from "./header";
-import { Component as BarChart } from "./barChart";
-import { Component as RadialChart } from "./radialChart";
+import ProjectSummary from "../components/dashboard/ProjectSummary";
+import TodayTask from "../components/dashboard/TodayTask";
+import Header from "../components/dashboard/Header";
+import { Component as BarChart } from "../components/dashboard/barChart";
+import { Component as RadialChart } from "../components/dashboard/radialChart";
 
 export default function Home() {
   return (

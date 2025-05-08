@@ -1,5 +1,5 @@
 'use client';
-import { tasksData, Task } from './Data';
+import { tasksData, Task } from '../../app/TasksTab/Data';
 
 const getStatusClass = (status: Task['status']) => {
   switch (status) {

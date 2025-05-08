@@ -1,4 +1,4 @@
-import { dummyData } from './Data';
+import { dummyData } from '../../app/ProjectsTab/Data';
 import Card from './Card';
 
 export default function ProjectsTable() {

@@ -1,5 +1,5 @@
-import Header from "./Header";
-import TaskTable from "./TaskTable";
+import Header from "../../components/tasks/Header";
+import TaskTable from "../../components/tasks/TaskTable";
 
 export default function TasksPage() {
   return (
