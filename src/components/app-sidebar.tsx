@@ -37,12 +37,12 @@ const items = [
   },
   {
     title: "Projects",
-    url: "/Projects",
+    url: "/ProjectsTab",
     icon: Calendar,
   },
   {
     title: "Tasks",
-    url: "/Tasks",
+    url: "/TasksTab",
     icon: List,
   },
   {
