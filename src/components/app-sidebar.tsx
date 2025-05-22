@@ -27,7 +27,7 @@ import { usePathname } from "next/navigation"; // Aktif yolu almak için
 const items = [
   {
     title: "Yeni Proje",
-    url: "#",
+    url: "/NewProjectsTab",
     icon: Plus,
   },
   {
@@ -47,7 +47,7 @@ const items = [
   },
   {
     title: "Users",
-    url: "#",
+    url: "/UsersTab",
     icon: Users,
   },
 ];

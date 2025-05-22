@@ -49,8 +49,7 @@ export default function ProjectSummary() {
           Tümünü gör
         </button>
       </div>
-      <table className="w-full text-xs text-left">
-        <thead style={{ 
+      <table className="w-full text-xs text-left">        <thead style={{ 
           color: colors.darkBlue, 
           borderBottomWidth: '1px', 
           borderBottomStyle: 'solid', 
